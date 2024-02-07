@@ -30,4 +30,4 @@
   1. ```add <task-name> [label-1] ...[label-n]``` Add a new task with labels
   2. ```ls```  Show the list of tasks
   3. ```rm <task-number>``` Delete the existing task
-  4. ```add-labels <task-number> <label-1> ...[label-n]``` add labels to existing task
+  4. ```add-labels <task-number> <label-1> ...[label-n]``` add additional info to existing task

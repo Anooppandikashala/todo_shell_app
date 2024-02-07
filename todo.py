@@ -18,7 +18,7 @@ def show_help():
     print("  add <task-name> [label-1] ...[label-n] Add a new task with labels")
     print("  ls  Show the list of tasks")
     print("  rm <task-number>  Delete the existing task")
-    print("  add-labels <task-number> <label-1> ...[label-n] add labels to existing task")
+    print("  add-labels <task-number> <label-1> ...[label-n] add additional info to existing task")
 
 def add_task(args):
     if len(args) < 1:
