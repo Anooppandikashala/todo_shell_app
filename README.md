@@ -19,7 +19,7 @@
   ```
   2. Add the script to  ```.bash_aliases``` file
   ```
-  todo()
+    todo()
     {
         python3 ~/todo.py "$@"
     }

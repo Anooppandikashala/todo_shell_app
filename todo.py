@@ -15,17 +15,17 @@ def is_integer(input_str):
 def show_help():
     print("Usage: todo <command> [arguments]")
     print("Commands:")
-    print("  add <task-name> [label-1] ...[label-n] Add a new task with labels")
-    print("  ls  Show the list of tasks")
-    print("  rm <task-number>  Delete the existing task")
-    print("  add-labels <task-number> <label-1> ...[label-n] add additional info to existing task")
+    print("  add <task-name> [label-1] ...[label-n] - Add a new task with labels")
+    print("  ls - Show the list of tasks")
+    print("  rm <task-number> - Delete the existing task")
+    print("  add-labels <task-number> <label-1> ...[label-n] - add additional info to existing task")
+    print("  clear - Delete all tasks")
 
 def add_task(args):
     if len(args) < 1:
         print("Error: Task name cannot be empty.")
         return
     task_name = " ".join(args)
-    # print("Task name : ",task_name)
     if not task_name:
         print("Error: Task name cannot be empty.")
         return
@@ -60,18 +60,14 @@ def add_labels(args):
         task_index = int(task_number)-1
         print("Updating ", todo_list[task_index])
         current_task_and_labels = str(todo_list[task_index]).split(" ")
-        # print(current_task_and_labels)
         for label in labels:
             current_task_and_labels.append(label)
-        # print(current_task_and_labels)
         todo_list[task_index] = " ".join(current_task_and_labels)
         writeToFile()
     else:
         print("Give Valid task number")
         print("todo add-labels <task-number> <label-1> ...[label-n]")
-    
     list_tasks()
-        
 
 def list_tasks():
     load_tasks()
@@ -81,7 +77,7 @@ def list_tasks():
         print("No tasks found.")
         return
     for i, task in enumerate(todo_list, start=1):
-        print(f"{i}. {task.strip()}")               
+        print(f"{i}. {task.strip()}")
 
 def load_tasks():
     todo_list.clear()
@@ -90,12 +86,10 @@ def load_tasks():
             tasks = file.readlines()
             if tasks:
                 for i, task in enumerate(tasks, start=1):
-                    # print(f"{i}. {task.strip()}")
                     todo_list.append(task.strip())
             else:
-                print("No tasks found.")
+                pass
     except FileNotFoundError:
-        # print("TODO file not found. Create a task first.")
         pass
 
 def init():
@@ -105,21 +99,24 @@ def init():
             tasks = file.readlines()
             if tasks:
                 for i, task in enumerate(tasks, start=1):
-                    # print(f"{i}. {task.strip()}")
                     todo_list.append(task.strip())
             else:
-                print("No tasks found.")
+                pass
     except FileNotFoundError:
         print("TODO file not found. Create a task first.")
         
+def clear_all():
+    todo_list.clear()
+    writeToFile()
+
 def main():
     if len(sys.argv) < 2:
         show_help()
         sys.exit(1)
-
+    
+    init()
     command = sys.argv[1]
     args = sys.argv[2:]
-    init()
 
     if command == "add":
         add_task(args)
@@ -129,6 +126,8 @@ def main():
         remove_task(args)
     elif command == "add-label":
         add_labels(args)
+    elif command == "clear":
+        clear_all()
     else:
         show_help()
 
