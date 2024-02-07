@@ -25,7 +25,7 @@ def add_task(args):
         print("Error: Task name cannot be empty.")
         return
     task_name = " ".join(args)
-    print("Task name : ",task_name)
+    # print("Task name : ",task_name)
     if not task_name:
         print("Error: Task name cannot be empty.")
         return
@@ -74,6 +74,7 @@ def add_labels(args):
         
 
 def list_tasks():
+    load_tasks()
     if len(todo_list) > 0:
         print("TODO List:")
     else:
@@ -83,6 +84,22 @@ def list_tasks():
         print(f"{i}. {task.strip()}")               
 
 def load_tasks():
+    todo_list.clear()
+    try:
+        with open(TODO_FILE, "r") as file:
+            tasks = file.readlines()
+            if tasks:
+                for i, task in enumerate(tasks, start=1):
+                    # print(f"{i}. {task.strip()}")
+                    todo_list.append(task.strip())
+            else:
+                print("No tasks found.")
+    except FileNotFoundError:
+        # print("TODO file not found. Create a task first.")
+        pass
+
+def init():
+    todo_list.clear()
     try:
         with open(TODO_FILE, "r") as file:
             tasks = file.readlines()
@@ -102,7 +119,7 @@ def main():
 
     command = sys.argv[1]
     args = sys.argv[2:]
-    load_tasks()
+    init()
 
     if command == "add":
         add_task(args)
